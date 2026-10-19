@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Caravelle - Bar-Brasserie à Niort</title>
+    <meta name="description" content="La Caravelle, votre bar-brasserie rue de la Gare à Niort. Profitez de nos formules du midi et de nos véritables frites maison dans un cadre convivial.">
+    
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="La Caravelle - Bar-Brasserie à Niort">
+    <meta property="og:description" content="Bar-brasserie chaleureux. Découvrez nos formules du midi et nos frites maison.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           VARIABLES & RESET
+        ========================================== */
+        :root {
+            --black: #1E1E1E;
+            --brown: #5A3A26;
+            --cream: #F4ECE0;
+            --green: #B5D334;
+            --font-title: 'Playfair Display', Georgia, serif;
+            --font-text: 'Inter', system-ui, -apple-system, sans-serif;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-text);
+            color: var(--black);
+            background-color: var(--cream);
+            line-height: 1.6;
+            /* Texture bois très discrète (lignes fines diagonales) */
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(90, 58, 38, 0.015) 0px,
+                rgba(90, 58, 38, 0.015) 2px,
+                transparent 2px,
+                transparent 10px
+            );
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ==========================================
+           TYPOGRAPHIE
+        ========================================== */
+        h1, h2, h3, .brand {
+            font-family: var(--font-title);
+            color: var(--black);
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ==========================================
+           BOUTONS & INTERACTIONS
+        ========================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            min-height: 48px; /* Accessibilité mobile optimale */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--green);
+            color: var(--black);
+            box-shadow: 0 4px 14px rgba(181, 211, 52, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #a4c02f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(181, 211, 52, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--black);
+            border: 2px solid var(--black);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--black);
+            color: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================
+           EFFETS SPÉCIAUX (ANIMATIONS)
+        ========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        /* ==========================================
+           HEADER (GLASSMORPHISM)
+        ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: rgba(244, 236, 224, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(90, 58, 38, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 2.5rem;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .nav-links a {
+                color: var(--black);
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 0.95rem;
+                transition: color 0.2s;
+                position: relative;
+            }
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -4px;
+                left: 0;
+                background-color: var(--green);
+                transition: width 0.3s ease;
+            }
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+        }
+
+        /* ==========================================
+           HERO SECTION
+        ========================================== */
+        .hero {
+            padding: calc(var(--header-height) + 6rem) 5% 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(181,211,52,0.15) 0%, rgba(244,236,224,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 8vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            color: var(--black);
+        }
+
+        .hero h1 span {
+            color: var(--brown);
+            display: block;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-family: var(--font-text);
+            font-weight: 400;
+            margin-top: 1rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .hero-cta {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+        }
+
+        /* ==========================================
+           SECTIONS COMMUNES
+        ========================================== */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background-color: var(--green);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+                gap: 4rem;
+            }
+        }
+
+        /* ==========================================
+           LA MAISON & À TABLE
+        ========================================== */
+        .text-block p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .img-wrapper {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(90, 58, 38, 0.1);
+            position: relative;
+        }
+
+        .img-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .img-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .menu-card {
+            background-color: var(--black);
+            color: var(--cream);
+            padding: 3rem 2.5rem;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(30, 30, 30, 0.15);
+        }
+
+        /* Filet fin décoratif dans la carte menu */
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(244, 236, 224, 0.1);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .menu-item {
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu-item h3 {
+            color: var(--green);
+            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+        }
+
+        .menu-item p {
+            color: rgba(244, 236, 224, 0.85);
+            font-size: 1.05rem;
+        }
+
+        /* ==========================================
+           INFOS PRATIQUES
+        ========================================== */
+        .bg-dark {
+            background-color: var(--black);
+            color: var(--cream);
+            position: relative;
+        }
+
+        .bg-dark h2 {
+            color: var(--cream);
+        }
+
+        .infos-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .infos-container {
+                grid-template-columns: 1fr 1.5fr;
+                align-items: start;
+            }
+        }
+
+        .info-item {
+            margin-bottom: 2rem;
+        }
+
+        .info-item h3 {
+            color: var(--green);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-text);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+        }
+
+        .info-item p {
+            font-size: 1.15rem;
+            color: rgba(244, 236, 224, 0.9);
+        }
+
+        .map-wrapper {
+            width: 100%;
+            height: 350px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(20%) contrast(1.1); /* Intégration esthétique de la carte */
+        }
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+        footer {
+            background-color: #151515;
+            color: rgba(244, 236, 224, 0.5);
+            text-align: center;
+            padding: 2.5rem 5%;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: rgba(244, 236, 224, 0.8);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        footer a:hover {
+            color: var(--green);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="brand" id="nav-nom">La Caravelle</a>
+        <nav class="nav-links">
+            <a href="#la-maison">La Maison</a>
+            <a href="#a-table">À Table</a>
+            <a href="#infos">Infos pratiques</a>
+        </nav>
+        <a href="#" class="btn btn-primary" id="nav-call">Appeler</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1 class="reveal" id="hero-nom">La Caravelle <span id="hero-type">Bar-brasserie • Niort</span></h1>
+        <div class="hero-cta reveal delay-1">
+            <a href="#" class="btn btn-primary" id="hero-call">Nous appeler</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline" id="hero-itineraire">Y aller</a>
+        </div>
+    </section>
+
+    <!-- LA MAISON -->
+    <section id="la-maison">
+        <div class="grid-2">
+            <div class="text-block reveal">
+                <div class="section-header" style="text-align: left;">
+                    <h2>La Maison</h2>
+                    <div class="divider" style="margin: 0;"></div>
+                </div>
+                <p>Bienvenue à La Caravelle, votre point de repère incontournable situé rue de la Gare à Niort.</p>
+                <p>Notre bar-brasserie vous accueille dans un cadre moderne et chaleureux, pensé pour partager un bon moment entre amis, en famille ou entre collègues.</p>
+            </div>
+            <!-- Image 1 : Ambiance brasserie moderne -->
+            <div class="img-wrapper reveal delay-1">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Intérieur chaleureux de la brasserie" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- À TABLE -->
+    <section id="a-table">
+        <div class="section-header reveal">
+            <h2>À Table</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="grid-2">
+            <!-- Image 2 : Focus sur des frites maison / plat de brasserie -->
+            <div class="img-wrapper reveal">
+                <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&q=80" alt="Frites maison croustillantes" loading="lazy">
+            </div>
+            <div class="menu-card reveal delay-1">
+                <div class="menu-item">
+                    <h3>Frites maison</h3>
+                    <p>Le savoir-faire de notre cuisine s'exprime à travers nos véritables frites maison, préparées sur place avec passion.</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Formules du midi</h3>
+                    <p>Pour vos pauses déjeuners, profitez de nos formules du midi généreuses et adaptées à tous les appétits.</p>
+                </div>
+                <!-- Emplacement prévu pour la carte si fournie ultérieurement -->
+                <div id="menu-additionnel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFOS PRATIQUES -->
+    <section id="infos" class="bg-dark">
+        <div class="section-header reveal">
+            <h2>Infos pratiques</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="infos-container">
+            <div class="reveal">
+                <div class="info-item">
+                    <h3>Adresse</h3>
+                    <p id="info-adresse">rue de la Gare, Niort</p>
+                </div>
+                <div class="info-item">
+                    <h3>Horaires</h3>
+                    <p id="info-horaires">Horaires : nous appeler</p>
+                </div>
+                <div class="info-item">
+                    <h3>Téléphone</h3>
+                    <p><a href="#" id="info-tel-link" style="color: var(--cream); text-decoration: none; font-weight: 500;"></a></p>
+                </div>
+            </div>
+            <div class="map-wrapper reveal delay-1">
+                <iframe id="map-iframe" src="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; <span id="year"></span> <span id="footer-nom">La Caravelle</span>. Tous droits réservés.</p>
+        <p style="margin-top: 0.5rem;"><a href="#">Mentions légales</a></p>
+    </footer>
+
+    <!-- ==========================================
+         CONFIGURATION & SCRIPT D'ANIMATION
+    ========================================== -->
+    <script>
+        // ------------------------------------------
+        // SITE.CONFIG.JS - TOUTES LES DONNÉES DU SITE
+        // ------------------------------------------
+        const SITE_CONFIG = {
+            nom: "La Caravelle",
+            type: "Bar-brasserie",
+            ville: "Niort",
+            
+            // À VÉRIFIER
+            adresse_complete: "94 rue de la Gare, 79000 Niort",
+            
+            // À VÉRIFIER
+            telephone: "05 49 24 90 33",
+            
+            // À VÉRIFIER (Tant que vide, affiche « Horaires : nous appeler »)
+            horaires: "",
+            
+            lien_itineraire: "https://www.google.com/maps/search/?api=1&query=La+Caravelle+rue+de+la+Gare+Niort"
+        };
+        // ------------------------------------------
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. INJECTION DES TEXTES
+            document.title = `${SITE_CONFIG.nom} - ${SITE_CONFIG.type} à ${SITE_CONFIG.ville}`;
+            document.getElementById('nav-nom').textContent = SITE_CONFIG.nom;
+            document.getElementById('hero-nom').innerHTML = `${SITE_CONFIG.nom} <span>${SITE_CONFIG.type} • ${SITE_CONFIG.ville}</span>`;
+            document.getElementById('footer-nom').textContent = SITE_CONFIG.nom;
+
+            // 2. GESTION DU TÉLÉPHONE
+            if (SITE_CONFIG.telephone) {
+                const telClean = SITE_CONFIG.telephone.replace(/\s/g, '');
+                const telHref = `tel:${telClean}`;
+                document.getElementById('nav-call').href = telHref;
+                document.getElementById('hero-call').href = telHref;
+                
+                const infoTel = document.getElementById('info-tel-link');
+                infoTel.href = telHref;
+                infoTel.textContent = SITE_CONFIG.telephone;
+            }
+
+            // 3. ITINÉRAIRE & ADRESSE
+            document.getElementById('hero-itineraire').href = SITE_CONFIG.lien_itineraire;
+            const adresseAffichee = SITE_CONFIG.adresse_complete || `rue de la Gare, ${SITE_CONFIG.ville}`;
+            document.getElementById('info-adresse').textContent = adresseAffichee;
+
+            // 4. HORAIRES
+            const horairesEl = document.getElementById('info-horaires');
+            if (SITE_CONFIG.horaires && SITE_CONFIG.horaires.trim() !== "") {
+                horairesEl.textContent = SITE_CONFIG.horaires;
+            } else {
+                horairesEl.textContent = "Horaires : nous appeler pour confirmer.";
+          
